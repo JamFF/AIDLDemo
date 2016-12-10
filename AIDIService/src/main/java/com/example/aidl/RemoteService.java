@@ -7,6 +7,8 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.List;
+
 /**
  * 描述：Service代码，供Client调用，注意清单文件一定要添加android:exported="true"
  * 作者：sam.fu
@@ -32,6 +34,16 @@ public class RemoteService extends Service {
             Log.d(TAG, "num1 + num2 = " + num1 + "+" + num2);
 
             return num1 + num2;
+        }
+    };
+
+    /**
+     * 测试返回值类型
+     */
+    private IBinder mTestBinder = new IMyAidlInterfaceTest.Stub() {
+        @Override
+        public List<String> basicTypes(byte aByte, int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, char aChar, String aString, List<String> aList) throws RemoteException {
+            return null;
         }
     };
 }

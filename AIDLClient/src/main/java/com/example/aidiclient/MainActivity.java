@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
+
+            // 释放资源
             mIMyAidlInterface = null;
         }
     };
@@ -54,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.bt_add).setOnClickListener(this);
     }
 
+    /**
+     * 绑定服务
+     */
     private void bindService() {
 
         // 5.0以后不能使用隐式绑定服务
@@ -75,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 try {
                     int res = mIMyAidlInterface.add(num1, num2);
+                    // 第二个例子，这里需要用ArrayList接收List的返回值
+                    // ArrayList<String> arrayList = mIMyAidlInterfaceTest.basicTypes(...);
                     et_res.setText(res + "");
                 } catch (RemoteException e) {
                     et_res.setText("错误了");
