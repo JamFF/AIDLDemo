@@ -2,7 +2,7 @@
 
 Android Service中AIDL的简单应用
 
-##步骤
+##简单的调用步骤
 
 1.建立Service
 
@@ -124,12 +124,35 @@ Android Service中AIDL的简单应用
 	    }
 	}
 
+##自定义类型
+
+
 
 ##注意事项
 
 1.aidl的包名无需和项目包名一致，但必须aidl的Service端和Client端中的包名及文件一模一样。
 
 2.Service允许替他程序start或者bind时，需要清单文件中添加`android:exported="true"`
+
+3.aidl可传输的基本数据类型中，不包括`short`；
+List、Map中的类型也必须是可支持的基本数据类型，同样不包括`short`；
+如果传输List、Map需要在前面书写`in`、`out`、`inout`其中的一种。
+
+4.如果返回值类型是List，在Client中接收时，由于List是一个接口，所以必须要用ArrayList接受，例如：
+
+aidl的代码
+
+	interface IMyAidlInterfaceTest {
+	    /**
+	     * 测试数据类型的aidl，在Client中接收时要用ArrayList，不能用List，它是个接口
+	     */
+	    List<String> basicTypes(byte aByte, int anInt, long aLong, boolean aBoolean, float aFloat,
+	            double aDouble, char aChar, String aString, in List<String> aList);
+	}
+
+Client端代码
+
+	ArrayList<String> arrayList = mIMyAidlInterfaceTest.basicTypes(...);
 
 ##参考
 
