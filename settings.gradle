@@ -1,1 +1,1 @@
-include ':AIDLService', ':AIDLClient'
+include ':AIDLService', ':AIDLClient', ':AIDLServiceSecond'
