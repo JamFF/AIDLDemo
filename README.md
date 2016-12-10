@@ -131,7 +131,7 @@ Android Service中AIDL的简单应用
 
 2.Service允许替他程序start或者bind时，需要清单文件中添加`android:exported="true"`
 
-
+##参考
 
 [AIDL-小白成长记](http://www.imooc.com/learn/606)
 
