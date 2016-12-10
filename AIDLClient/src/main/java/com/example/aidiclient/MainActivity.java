@@ -13,7 +13,12 @@ import android.widget.EditText;
 
 import com.example.aidl.IMyAidlInterface;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * 描述：Client，调用Service中的AIDL
+ * 作者：sam.fu
+ * 创建时间：2016/12/10 11:33
+ */
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText et_num1, et_num2, et_res;
 
@@ -23,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
 
-            // 拿到了远程的服务
+            // iBinder就是Service中onBind返回的mBinder，mBinder就是IMyAidlInterface
+            // 可以强转为IMyAidlInterface，但是提供了一个asInterface方法得到
             mIMyAidlInterface = IMyAidlInterface.Stub.asInterface(iBinder);
         }
 
@@ -45,12 +51,28 @@ public class MainActivity extends AppCompatActivity {
         et_num1 = (EditText) findViewById(R.id.et_num1);
         et_num2 = (EditText) findViewById(R.id.et_num2);
         et_res = (EditText) findViewById(R.id.et_res);
-        findViewById(R.id.bt_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        findViewById(R.id.bt_add).setOnClickListener(this);
+    }
 
+    private void bindService() {
+
+        // 5.0以后不能使用隐式绑定服务
+        Intent intent = new Intent();
+        // 传入包名，完整类名
+        intent.setComponent(new ComponentName("com.example.aidl", "com.example.aidl.RemoteService"));
+
+        bindService(intent, conn, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.bt_add:
                 int num1 = Integer.parseInt(et_num1.getText().toString());
                 int num2 = Integer.parseInt(et_num2.getText().toString());
+
                 try {
                     int res = mIMyAidlInterface.add(num1, num2);
                     et_res.setText(res + "");
@@ -58,18 +80,8 @@ public class MainActivity extends AppCompatActivity {
                     et_res.setText("错误了");
                     e.printStackTrace();
                 }
-
-            }
-        });
-    }
-
-    private void bindService() {
-        // 5.0以后不能使用隐式绑定服务
-        Intent intent = new Intent();
-        // 传入包名，完整类名
-        intent.setComponent(new ComponentName("com.example.aidl", "com.example.aidl.RemoteService"));
-
-        bindService(intent, conn, Context.BIND_AUTO_CREATE);
+                break;
+        }
     }
 
     @Override
