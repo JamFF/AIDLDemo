@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+
+            // 这个是远程服务的代理Proxy
             mIMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
         }
 

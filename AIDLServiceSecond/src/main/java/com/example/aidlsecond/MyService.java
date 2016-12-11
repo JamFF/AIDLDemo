@@ -21,6 +21,9 @@ public class MyService extends Service {
         return mBinder;
     }
 
+    /**
+     * 创建存根，实现add方法
+     */
     private Binder mBinder = new IMyAidlInterface.Stub() {
         @Override
         public List<Person> add(Person person) throws RemoteException {
