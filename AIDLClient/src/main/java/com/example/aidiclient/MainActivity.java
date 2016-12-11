@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 try {
                     int res = mIMyAidlInterface.add(num1, num2);
-                    // 第二个例子，这里需要用ArrayList接收List的返回值
-                    // ArrayList<String> arrayList = mIMyAidlInterfaceTest.basicTypes(...);
+                    // 第二个例子
+                    // List<String> list = mIMyAidlInterfaceTest.basicTypes(...);
                     et_res.setText(res + "");
                 } catch (RemoteException e) {
                     et_res.setText("错误了");
