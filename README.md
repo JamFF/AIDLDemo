@@ -129,11 +129,13 @@ Android Service中AIDL的简单应用
 
 ###注意事项
 
-1.aidl的包名无需和项目包名一致，但必须aidl的Service端和Client端中的包名及文件一模一样（在自定义类型中有序列化对象时，是需要报名一致的！）；
+1.AIDL编译，通过SDK中提供的程序编译，${SDK_ROOT}/build-tools/${BUILD_TOOL_VERSION}/aidl.exe
 
-2.Service允许替他程序start或者bind时，需要清单文件中添加`android:exported="true"`；
+2.aidl的包名无需和项目包名一致，但必须aidl的Service端和Client端中的包名及文件一模一样（在自定义类型中有序列化对象时，是需要报名一致的！）；
 
-3.aidl可传输的基本数据类型中，不包括`short`；
+3.Service允许替他程序start或者bind时，需要清单文件中添加`android:exported="true"`；
+
+4.aidl可传输的基本数据类型中，不包括`short`，由于在序列化时没有`dest.writeShort()`方法，所以不支持`short`；
 List、Map中的类型也必须是可支持的基本数据类型，同样不包括`short`；
 如果传输List、Map需要在前面书写`in`、`out`、`inout`其中的一种。
 
@@ -318,11 +320,19 @@ List、Map中的类型也必须是可支持的基本数据类型，同样不包�
 	}
 
 
-
 ###注意事项
 
-1.针对自定义类型时，AIDL的Service、Client端必须保证aidl中自定义类型与java中的自定义类型包名一致。
+1.针对自定义类型时，AIDL的Service、Client端必须保证aidl中自定义类型与java中的自定义类型包名一致；
 
+2.AIDL只支持方法，不能定义静态成员；
+
+3.除默认的类型外，均需要导包，例如Person类；
+
+4.AIDL、Binder、Messager的选择
+
+* 1 AIDL：IPC，有多线程，有多个应用程序；
+* 2 Binder：只有IPC，没有多线程，有多个应用程序；
+* 3 Messager：只有IPC，没有多线程，没有多个应用程序。
 
 ##参考
 
