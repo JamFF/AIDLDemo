@@ -44,7 +44,7 @@ Android Service中AIDL的简单应用
 	    int add(int num1, int num2);
 	}
 
-3.编译后会在`build/generated/source/aidl/debug/`下生成对应报名下的java文件
+3.编译后会在`build/generated/source/aidl/debug/`下生成对应包名下的java文件
 
 4.创建Client端，将Service中的aidl文件夹粘贴过来
 
@@ -129,11 +129,11 @@ Android Service中AIDL的简单应用
 
 ###注意事项
 
-1.AIDL编译，通过SDK中提供的程序编译，${SDK_ROOT}/build-tools/${BUILD_TOOL_VERSION}/aidl.exe
+1.AIDL编译，通过SDK中提供的程序编译，目录：${SDK_ROOT}/build-tools/${BUILD_TOOL_VERSION}/aidl.exe
 
-2.aidl的包名无需和项目包名一致，但必须aidl的Service端和Client端中的包名及文件一模一样（在自定义类型中有序列化对象时，是需要报名一致的！）；
+2.aidl的包名无需和项目包名一致，但必须aidl的Service端和Client端中的包名及文件一模一样（在自定义类型中有序列化对象时，是需要报名一致的！下面自定义类型有说明）；
 
-3.Service允许替他程序start或者bind时，需要清单文件中添加`android:exported="true"`；
+3.Service允许替他程序start或者bind时，需要清单文件中添加`android:exported="true"`，如果在清单文件添加action，默认为true，否则为false；
 
 4.aidl可传输的基本数据类型中，不包括`short`，由于在序列化时没有`dest.writeShort()`方法，所以不支持`short`；
 List、Map中的类型也必须是可支持的基本数据类型，同样不包括`short`；
