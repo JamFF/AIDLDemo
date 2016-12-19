@@ -131,7 +131,7 @@ Android Service中AIDL的简单应用
 
 1.AIDL编译，通过SDK中提供的程序编译，目录：${SDK_ROOT}/build-tools/${BUILD_TOOL_VERSION}/aidl.exe
 
-2.aidl的包名无需和项目包名一致，但必须aidl的Service端和Client端中的包名及文件一模一样（在自定义类型中有序列化对象时，是需要报名一致的！下面自定义类型有说明）；
+2.aidl的包名无需和项目包名一致，但必须aidl的Service端和Client端中的包名及文件一模一样（在自定义类型中有序列化对象时，是需要包名一致的！下面自定义类型有说明）；
 
 3.Service允许替他程序start或者bind时，需要清单文件中添加`android:exported="true"`，如果在清单文件添加action，默认为true，否则为false；
 
@@ -330,9 +330,9 @@ List、Map中的类型也必须是可支持的基本数据类型，同样不包�
 
 4.AIDL、Binder、Messager的选择
 
-* 1 AIDL：IPC，有多线程，有多个应用程序；
-* 2 Binder：只有IPC，没有多线程，有多个应用程序；
-* 3 Messager：只有IPC，没有多线程，没有多个应用程序。
+* AIDL：IPC，有多线程，有多个应用程序；
+* Binder：只有IPC，没有多线程，有多个应用程序；
+* Messager：只有IPC，没有多线程，没有多个应用程序。
 
 ##参考
 
