@@ -133,7 +133,7 @@ Android Service中AIDL的简单应用
 
 2.aidl的包名无需和项目包名一致，但必须aidl的Service端和Client端中的包名及文件一模一样（在自定义类型中有序列化对象时，是需要包名一致的！下面自定义类型有说明）；
 
-3.Service允许其他程序start或者bind时，需要清单文件中添加`android:exported="true"`，如果在清单文件添加action，默认为true，否则为false；
+3.Service允许其他程序start或者bind时，需要清单文件中添加`android:exported="true"`，如果在清单文件添加了action，则说明希望被替他应用程序调用该属性为true，否则为false；
 
 4.aidl可传输的基本数据类型中，不包括`short`，由于在序列化时没有`dest.writeShort()`方法，所以不支持`short`；
 List、Map中的类型也必须是可支持的基本数据类型，同样不包括`short`；
