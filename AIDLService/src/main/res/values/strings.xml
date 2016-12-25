@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AIDL</string>
+    <string name="service">This is AIDL Service!</string>
 </resources>

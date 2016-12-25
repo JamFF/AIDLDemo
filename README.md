@@ -2,15 +2,13 @@
 
 Android Service中AIDL的简单应用
 
-##简单的调用
+##Service中AIDL的简单的调用
 
 ###步骤
 
-1.建立Service
+1.创建AIDL中Service端项目，新建Service
 
 	public class RemoteService extends Service {
-	
-	    private static final String TAG = "RemoteService";
 	
 	    /**
 	     * 当客户端绑定到该服务时，会执行
@@ -18,21 +16,11 @@ Android Service中AIDL的简单应用
 	    @Nullable
 	    @Override
 	    public IBinder onBind(Intent intent) {
-	        return mBinder;
+	        return null;
 	    }
-	
-	    private IBinder mBinder = new IMyAidlInterface.Stub() {
-	        @Override
-	        public int add(int num1, int num2) throws RemoteException {
-	
-	            Log.d(TAG, "num1 + num2 = " + num1 + "+" + num2);
-	
-	            return num1 + num2;
-	        }
-	    };
 	}
 
-2.新建aidl文件夹，写aidl中Service端代码
+2.新建aidl文件夹，包名无所谓，写AIDL中的代码
 
 	package com.example.aidl;
 	
@@ -46,9 +34,35 @@ Android Service中AIDL的简单应用
 
 3.编译后会在`build/generated/source/aidl/debug/`下生成对应包名下的java文件
 
-4.创建Client端，将Service中的aidl文件夹粘贴过来
+4.在onBind时返回IBinder对象，也就是IMyAidlInterface
 
-5.bindService，得到aidl远程接口，调用其中add方法
+	public class RemoteService extends Service {
+
+	    private static final String TAG = "RemoteService";
+
+	    /**
+	     * 当客户端绑定到该服务时，会执行
+	     */
+	    @Nullable
+	    @Override
+	    public IBinder onBind(Intent intent) {
+	        return mBinder;
+	    }
+
+	    private IBinder mBinder = new IMyAidlInterface.Stub() {
+	        @Override
+	        public int add(int num1, int num2) throws RemoteException {
+
+	            Log.d(TAG, "num1 + num2 = " + num1 + "+" + num2);
+
+	            return num1 + num2;
+	        }
+	    };
+	}
+
+5.创建AIDL中Client端项目，将Service端的aidl文件夹粘贴过来
+
+6.在Client端的Activity中bindService，得到AIDL远程接口，调用其中add方法
 
 	public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 	
@@ -129,21 +143,21 @@ Android Service中AIDL的简单应用
 
 ###注意事项
 
-1.AIDL编译，通过SDK中提供的程序编译，目录：${SDK_ROOT}/build-tools/${BUILD_TOOL_VERSION}/aidl.exe
+1.AIDL编译，通过SDK中提供的aidl.exe进行编译，文件目录：${SDK_ROOT}/build-tools/${BUILD_TOOL_VERSION}/aidl.exe；
 
-2.aidl的包名无需和项目包名一致，但必须aidl的Service端和Client端中的包名及文件一模一样（在自定义类型中有序列化对象时，是需要包名一致的！下面自定义类型有说明）；
+2.AIDL的包名无需和项目包名一致，但AIDL的Service端和Client端的包名及文件必须一模一样（在自定义类型中有序列化对象时，是需要包名一致的！下面自定义类型有说明）；
 
-3.Service允许其他程序start或者bind时，需要清单文件中添加`android:exported="true"`，如果在清单文件添加了action，则说明希望被替他应用程序调用该属性为true，否则为false；
+3.Service想允许`其他程序`start或者bind时，需要在清单文件中添加`android:exported="true"`，如果在清单文件添加了action，则说明希望被替他应用程序调用，该属性默认为true，否则默认为false；
 
-4.aidl可传输的基本数据类型中，不包括`short`，由于在序列化时没有`dest.writeShort()`方法，所以不支持`short`；
+4.AIDL可传输的基本数据类型中，不包括`short`，由于在序列化时没有`dest.writeShort()`方法，所以不支持`short`；
 List、Map中的类型也必须是可支持的基本数据类型，同样不包括`short`；
 如果传输List、Map需要在前面书写`in`、`out`、`inout`其中的一种。
 
-##自定义类型
+##自定义类型SecondDemo
 
 ###步骤
 
-1.aidl文件，这里参数为自定义对象Person，返回为Person的List集合
+1.AIDL文件，这里参数为自定义对象Person，返回为Person的List集合
 
 	package com.example.aidlsecond;
 	
@@ -163,7 +177,7 @@ List、Map中的类型也必须是可支持的基本数据类型，同样不包�
 	
 	parcelable Person;
 
-3.新建Person.java并进行序列化，这里的包名要和aidl中的包名一致
+3.新建Person.java并进行序列化，这里的包名要和AIDL中的包名一致
 
 	package com.example.aidlsecond;
 	
@@ -260,7 +274,7 @@ List、Map中的类型也必须是可支持的基本数据类型，同样不包�
 
 5.创建Client端，将Service中的aidl文件夹粘贴过来，将Person.java粘贴过来，这里一定要保证包名一致
 
-6.bindService，得到aidl远程接口，调用其中add方法
+6.bindService，得到AIDL远程接口，调用其中add方法
 
 	public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 	
@@ -322,7 +336,7 @@ List、Map中的类型也必须是可支持的基本数据类型，同样不包�
 
 ###注意事项
 
-1.针对自定义类型时，AIDL的Service、Client端必须保证aidl中自定义类型与java中的自定义类型包名一致；
+1.针对自定义类型时，AIDL的Service端、Client端必须保证AIDL中自定义类型与java中的自定义类型包名一致；
 
 2.AIDL只支持方法，不能定义静态成员；
 
