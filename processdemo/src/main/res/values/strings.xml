@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ProcessDemo</string>
+    <string name="title_activity_second">ProcessSecond</string>
+    <string name="title_activity_third">ProcessThird</string>
+</resources>
