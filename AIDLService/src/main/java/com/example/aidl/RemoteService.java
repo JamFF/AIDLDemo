@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * 描述：Service代码，供Client调用，注意清单文件一定要添加android:exported="true"
- * 作者：sam.fu
+ * 作者：JamFF
  * 创建时间：2016/7/16 17:19
  */
 public class RemoteService extends Service {
