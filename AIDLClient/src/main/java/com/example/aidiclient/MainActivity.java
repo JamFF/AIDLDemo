@@ -15,7 +15,7 @@ import com.example.aidl.IMyAidlInterface;
 
 /**
  * 描述：Client，调用Service中的AIDL
- * 作者：sam.fu
+ * 作者：JamFF
  * 创建时间：2016/12/10 11:33
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {

@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 /**
  * 描述：
- * 作者：sam.fu
+ * 作者：JamFF
  * 创建时间：2016/12/11 14:12
  */
 
