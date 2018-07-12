@@ -2,9 +2,9 @@
 
 Android Service中AIDL的简单应用
 
-##Service中AIDL的简单的调用
+## Service中AIDL的简单的调用
 
-###步骤
+### 步骤
 
 1. 创建AIDL中Service端项目，新建Service
 
@@ -148,7 +148,7 @@ Android Service中AIDL的简单应用
     }
     ```
 
-###注意事项
+### 注意事项
 
 1. AIDL编译，通过SDK中提供的aidl.exe进行编译，文件目录：${SDK_ROOT}/build-tools/${BUILD_TOOL_VERSION}/aidl.exe；
 
@@ -160,9 +160,9 @@ Android Service中AIDL的简单应用
 List、Map中的类型也必须是可支持的基本数据类型，同样不包括`short`；
 如果传输List、Map需要在前面书写`in`、`out`、`inout`其中的一种。
 
-##自定义类型SecondDemo
+## 自定义类型SecondDemo
 
-###步骤
+### 步骤
 
 1. AIDL文件，这里参数为自定义对象Person，返回为Person的List集合
 
@@ -350,7 +350,7 @@ List、Map中的类型也必须是可支持的基本数据类型，同样不包�
     }
     ```
 
-###注意事项
+### 注意事项
 
 1. 针对自定义类型时，AIDL的Service端、Client端必须保证AIDL中自定义类型与java中的自定义类型包名一致；
 
@@ -364,7 +364,7 @@ List、Map中的类型也必须是可支持的基本数据类型，同样不包�
 * Binder：只有IPC，没有多线程，有多个应用程序；
 * Messager：只有IPC，没有多线程，没有多个应用程序。
 
-##参考
+## 参考
 
 [AIDL-小白成长记](http://www.imooc.com/learn/606)
 
