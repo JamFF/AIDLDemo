@@ -360,9 +360,9 @@ List、Map中的类型也必须是可支持的基本数据类型，同样不包�
 
 4. AIDL、Binder、Messager的选择
 
-* AIDL：IPC，有多线程，有多个应用程序；
-* Binder：只有IPC，没有多线程，有多个应用程序；
-* Messager：只有IPC，没有多线程，没有多个应用程序。
+    * AIDL：IPC，有多线程，有多个应用程序；
+    * Binder：只有IPC，没有多线程，有多个应用程序；
+    * Messager：只有IPC，没有多线程，没有多个应用程序。
 
 ## 参考
 
