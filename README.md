@@ -36,7 +36,7 @@ Android Service中AIDL的简单应用
     }
     ```
 
-3. 编译后会在`build/generated/source/aidl/debug/`下生成对应包名下的java文件
+3. 编译后会在 `build/generated/source/aidl/debug/` 下生成对应包名下的java文件
 
 4. 在onBind时返回IBinder对象，也就是IMyAidlInterface
 
@@ -154,13 +154,13 @@ Android Service中AIDL的简单应用
 
 2. AIDL的包名无需和项目包名一致，但AIDL的Service端和Client端的包名及文件必须一模一样（在自定义类型中有序列化对象时，是需要包名一致的！下面自定义类型有说明）；
 
-3. Service想允许**其他程序**start或者bind时，需要在清单文件中添加`android:exported="true"`，如果在清单文件添加了action，则说明希望被替他应用程序调用，该属性默认为true，否则默认为false；
+3. Service想允许**其他程序**start或者bind时，需要在清单文件中添加 `android:exported="true"`，如果在清单文件添加了action，则说明希望被替他应用程序调用，该属性默认为true，否则默认为false；
 
-4. AIDL可传输的基本数据类型中，不包括`short`，由于在序列化时没有`dest.writeShort()`方法，所以不支持`short`；
+4. AIDL可传输的基本数据类型中，不包括 `short`，由于在序列化时没有 `dest.writeShort()` 方法，所以不支持 `short`；
 
-5. List、Map中的类型也必须是可支持的基本数据类型，同样不包括`short`；
+5. List、Map中的类型也必须是可支持的基本数据类型，同样不包括 `short`；
 
-6. 如果传输List、Map需要在前面书写`in`、`out`、`inout`其中的一种。
+6. 如果传输List、Map需要在前面书写 `in`、`out`、`inout` 其中的一种。
 
 ## 自定义类型SecondDemo
 
