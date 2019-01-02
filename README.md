@@ -22,7 +22,7 @@ Android Service中AIDL的简单应用
     }
     ```
 
-2. 新建aidl文件夹，包名无所谓，写AIDL中的代码
+2. 新建aidl文件夹，**包名无所谓**，写AIDL中的代码
 
     ```aidl
     package com.example.aidl;
@@ -66,7 +66,7 @@ Android Service中AIDL的简单应用
     }
     ```
 
-5. 创建AIDL中Client端项目，将Service端的aidl文件夹粘贴过来
+5. 创建AIDL中Client端项目，将Service端的aidl文件夹粘贴过来，**这两者的包名必须一致**
 
 6. 在Client端的Activity中bindService，得到AIDL远程接口，调用其中add方法
 
@@ -152,7 +152,7 @@ Android Service中AIDL的简单应用
 
 1. AIDL编译，通过SDK中提供的aidl.exe进行编译，文件目录：`${SDK_ROOT}/build-tools/${BUILD_TOOL_VERSION}/aidl.exe`；
 
-2. AIDL的包名无需和项目包名一致，但AIDL的Service端和Client端的包名及文件必须一模一样（在自定义类型中有序列化对象时，是需要包名一致的！下面自定义类型有说明）；
+2. AIDL的**包名无需和项目包名一致**，但AIDL的Service端和Client端的包名及文件必须一模一样（在自定义类型中有序列化对象时，是需要包名一致的！下面自定义类型有说明）；
 
 3. Service想允许**其他程序**start或者bind时，需要在清单文件中添加 `android:exported="true"`，如果在清单文件添加了action，则说明希望被替他应用程序调用，该属性默认为true，否则默认为false；
 
@@ -320,6 +320,7 @@ Android Service中AIDL的简单应用
     
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
+                // 拿到的不是远程服务，只是一个远程服务的代理Proxy
                 mIMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
             }
     
@@ -351,6 +352,12 @@ Android Service中AIDL的简单应用
         }
     }
     ```
+
+
+## 原理剖析
+
+直接上图
+![AIDL](https://github.com/JamFF/AIDLDemo/blob/master/art/aidl.png)
 
 ### 注意事项
 
