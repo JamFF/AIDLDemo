@@ -372,8 +372,22 @@ Android Service中AIDL的简单应用
     * Binder：只有IPC，没有多线程，有多个应用程序
     * Messager：只有IPC，没有多线程，没有多个应用程序
 
+5. AIDL方法在服务端的Binder线程池中执行，因此多个客户端同时连接时，会存在多个线程同时访问的情形，所以我们要在AIDL方法（Stub的实现）中处理线程同步。
+
+6. AIDL中不能使用普通java接口，而是aidl接口，且回调时在Binder线程池中执行，如果要进行UI操作，则要切换线程。
+
+7. 因为跨进程，所以传到服务端的接口是一个新的对象，所以需要使用RemoteCallbackList来解注册。
+
+8. 客户端的onServiceConnected和onServiceDisconnected方法都运行在UI线程中，所以不可以在其中直接调用服务端的耗时方法；服务端的方法本身就运行在服务端的Binder线程池中，所以本身就可以执行大量耗时操作，而不用开线程。
+
+9. Binder的linkToDeath和unlinkToDeath方法，设置DeathRecipient 接口，会在客户端的Binder线程池中被回调，而onServiceDisconnected在客户端的UI线程被回调，也就是说DeathRecipient 的回调不能访问UI。
+
+10. AIDL权限验证，可以使用Service的onBind中验证，不通过就返回null；也可以在服务端的onTransact中返回false。
+
 ## 参考
 
 [AIDL-小白成长记](http://www.imooc.com/learn/606)
 
 [Android 接口定义语言 (AIDL)](https://developer.android.google.cn/guide/components/aidl.html)
+
+[AIDL注意点](https://www.jianshu.com/p/7efbe4237d26)
