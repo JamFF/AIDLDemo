@@ -1,1 +1,5 @@
-include ':AIDLService', ':AIDLClient', ':AIDLServiceSecond', ':AIDLClientSecond', ':processdemo'
+include ':AIDLService'
+include ':AIDLClient'
+include ':AIDLServiceSecond'
+include ':AIDLClientSecond'
+include ':processdemo'

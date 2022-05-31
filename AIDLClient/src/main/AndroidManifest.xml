@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.aidiclient">
+    package="com.example.aidiclient">
+
+    <!-- Android11以上，客户端需要添加软件包的可见性，服务端不需要添加 -->
+    <!-- https://developer.android.google.cn/training/basics/intents/package-visibility?hl=zh-cn#package-name -->
+    <queries>
+        <!-- 使用package或者intent，任选其一即可 -->
+        <package android:name="com.example.aidl" />
+        <intent>
+            <action android:name="com.example.aidl.ADD" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -8,11 +18,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

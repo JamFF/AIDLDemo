@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.fj.processdemo">
+    package="com.example.fj.processdemo">
 
     <application
         android:name="MyApplication"
@@ -9,21 +9,25 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SecondActivity"
+            android:exported="false"
             android:label="@string/title_activity_second"
             android:process=":remote">
             <!--以":"开头的进程属于当前应用的私用进程，其它应用的组件不可以和它跑在同一个进程中-->
         </activity>
         <activity
             android:name=".ThirdActivity"
+            android:exported="false"
             android:label="@string/title_activity_third"
             android:process="com.thh.ipcdemo.remote">
             <!--而进程名不以":"开头的进程属于全局进程，其它应用通过ShareUID方式可以和它跑在同一个进程中-->

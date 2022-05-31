@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bindService(intent, conn, BIND_AUTO_CREATE);
     }
 
-    private ServiceConnection conn = new ServiceConnection() {
+    private final ServiceConnection conn = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -54,16 +56,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.bt:
-                try {
-                    List<Person> persons = mIMyAidlInterface.add(new Person("sam", 27));
-                    Log.d(TAG, "onClick: " + persons);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                break;
+        if (v.getId() == R.id.bt) {
+            try {
+                List<Person> persons = mIMyAidlInterface.add(new Person("sam", 27));
+                Log.d(TAG, "onClick: " + persons);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 

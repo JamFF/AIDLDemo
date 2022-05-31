@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MyService extends Service {
 
-    private ArrayList<Person> mPersons = new ArrayList<>();
+    private final ArrayList<Person> mPersons = new ArrayList<>();
 
     public MyService() {
     }
@@ -24,7 +24,7 @@ public class MyService extends Service {
     /**
      * 创建存根，实现add方法
      */
-    private Binder mBinder = new IMyAidlInterface.Stub() {
+    private final Binder mBinder = new IMyAidlInterface.Stub() {
         @Override
         public List<Person> add(Person person) throws RemoteException {
             mPersons.add(person);

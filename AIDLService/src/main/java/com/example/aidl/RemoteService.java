@@ -4,7 +4,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
+
 import android.util.Log;
 
 import java.util.List;
@@ -27,7 +29,7 @@ public class RemoteService extends Service {
         return mBinder;
     }
 
-    private IBinder mBinder = new IMyAidlInterface.Stub() {
+    private final IBinder mBinder = new IMyAidlInterface.Stub() {
         @Override
         public int add(int num1, int num2) throws RemoteException {
 

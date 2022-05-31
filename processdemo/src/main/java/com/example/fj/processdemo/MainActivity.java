@@ -1,7 +1,9 @@
 package com.example.fj.processdemo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 
@@ -17,13 +19,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.bt_second:
-                startActivity(new Intent(this, SecondActivity.class));
-                break;
-            case R.id.bt_third:
-                startActivity(new Intent(this, ThirdActivity.class));
-                break;
+        if (view.getId() == R.id.bt_second) {
+            startActivity(new Intent(this, SecondActivity.class));
+        } else {
+            startActivity(new Intent(this, ThirdActivity.class));
         }
     }
 }

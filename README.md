@@ -54,7 +54,7 @@ Android Service中AIDL的简单应用
             return mBinder;
         }
     
-        private IBinder mBinder = new IMyAidlInterface.Stub() {
+        private final IBinder mBinder = new IMyAidlInterface.Stub() {
             @Override
             public int add(int num1, int num2) throws RemoteException {
     
@@ -77,7 +77,7 @@ Android Service中AIDL的简单应用
     
         private IMyAidlInterface mIMyAidlInterface;
     
-        private ServiceConnection conn = new ServiceConnection() {
+        private final ServiceConnection conn = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
     
@@ -101,9 +101,9 @@ Android Service中AIDL的简单应用
         }
     
         private void initView() {
-            et_num1 = (EditText) findViewById(R.id.et_num1);
-            et_num2 = (EditText) findViewById(R.id.et_num2);
-            et_res = (EditText) findViewById(R.id.et_res);
+            et_num1 = findViewById(R.id.et_num1);
+            et_num2 = findViewById(R.id.et_num2);
+            et_res = findViewById(R.id.et_res);
             findViewById(R.id.bt_add).setOnClickListener(this);
         }
     
@@ -113,30 +113,29 @@ Android Service中AIDL的简单应用
         private void bindService() {
     
             // 5.0以后不能使用隐式绑定服务
-            Intent intent = new Intent();
-            // 传入包名，完整类名
-            intent.setComponent(new ComponentName("com.example.aidl", "com.example.aidl.RemoteService"));
-    
+            // 方式一：没有action的情况，包名+完整类名
+            Intent intent = new Intent().setComponent(
+                    new ComponentName("com.example.aidl", "com.example.aidl.RemoteService")
+            );
+            // 方式二：没有action的情况，action+包名
+//          Intent intent = new Intent("com.example.aidl.ADD").setPackage("com.example.aidl");
             bindService(intent, conn, Context.BIND_AUTO_CREATE);
         }
     
         @Override
         public void onClick(View v) {
     
-            switch (v.getId()) {
-    
-                case R.id.bt_add:
-                    int num1 = Integer.parseInt(et_num1.getText().toString());
-                    int num2 = Integer.parseInt(et_num2.getText().toString());
-    
-                    try {
-                        int res = mIMyAidlInterface.add(num1, num2);
-                        et_res.setText(res + "");
-                    } catch (RemoteException e) {
-                        et_res.setText("错误了");
-                        e.printStackTrace();
-                    }
-                    break;
+            if (v.getId() == R.id.bt_add) {
+                 int num1 = Integer.parseInt(et_num1.getText().toString());
+                 int num2 = Integer.parseInt(et_num2.getText().toString());
+ 
+                 try {
+                     int res = mIMyAidlInterface.add(num1, num2);
+                     et_res.setText(String.valueOf(res));
+                 } catch (RemoteException e) {
+                     et_res.setText("错误了");
+                     e.printStackTrace();
+                 }
             }
         }
     
@@ -161,6 +160,8 @@ Android Service中AIDL的简单应用
 5. List、Map中的类型也必须是可支持的基本数据类型，同样不包括 `short`；
 
 6. 如果传输List、Map需要在前面书写 `in`、`out`、`inout` 其中的一种。
+
+7. Android11以上，在客户端的AndroidManifest中，需要添加[管理软件包可见性](https://developer.android.google.cn/training/basics/intents/package-visibility?hl=zh-cn#package-name)，服务端不需要添加
 
 ## 自定义类型SecondDemo
 
@@ -279,7 +280,7 @@ Android Service中AIDL的简单应用
             return mBinder;
         }
     
-        private Binder mBinder = new IMyAidlInterface.Stub() {
+        private final Binder mBinder = new IMyAidlInterface.Stub() {
             @Override
             public List<Person> add(Person person) throws RemoteException {
                 mPersons.add(person);
@@ -316,7 +317,7 @@ Android Service中AIDL的简单应用
             bindService(intent, conn, BIND_AUTO_CREATE);
         }
     
-        private ServiceConnection conn = new ServiceConnection() {
+        private final ServiceConnection conn = new ServiceConnection() {
     
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -332,16 +333,13 @@ Android Service中AIDL的简单应用
     
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-    
-                case R.id.bt:
-                    try {
-                        List<Person> persons = mIMyAidlInterface.add(new Person("sam", 27));
-                        Log.d(TAG, "onClick: " + persons);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                    break;
+            if (v.getId() == R.id.bt) {
+                try {
+                    List<Person> persons = mIMyAidlInterface.add(new Person("sam", 27));
+                    Log.d(TAG, "onClick: " + persons);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         }
     
@@ -391,3 +389,5 @@ Android Service中AIDL的简单应用
 [Android 接口定义语言 (AIDL)](https://developer.android.google.cn/guide/components/aidl.html)
 
 [AIDL注意点](https://www.jianshu.com/p/7efbe4237d26)
+
+[管理软件包可见性](https://developer.android.google.cn/training/basics/intents/package-visibility?hl=zh-cn#package-name)

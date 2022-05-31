@@ -3,6 +3,8 @@ package com.example.aidlsecond;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 /**
  * 描述：
  * 作者：JamFF
@@ -73,6 +75,7 @@ public class Person implements Parcelable {
         }
     };
 
+    @NonNull
     @Override
     public String toString() {
         return "Person{" +

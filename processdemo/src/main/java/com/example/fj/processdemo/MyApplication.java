@@ -2,6 +2,7 @@ package com.example.fj.processdemo;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.os.Build;
 import android.util.Log;
 
 /**
@@ -17,10 +18,16 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "[MyApplication onCreate] application start, process name:" + getProcessName());
+        final String processName;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            processName = getProcessName();
+        } else {
+            processName = getMyProcessName();
+        }
+        Log.d(TAG, "[MyApplication onCreate] application start, process name:" + processName);
     }
 
-    private String getProcessName() {
+    private String getMyProcessName() {
         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo :
                 activityManager.getRunningAppProcesses()) {
