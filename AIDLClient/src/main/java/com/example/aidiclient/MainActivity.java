@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent().setComponent(
                 new ComponentName("com.example.aidl", "com.example.aidl.RemoteService")
         );
-        // 方式二：没有action的情况，action+包名
+        // 方式二：有action的情况，action+包名
 //        Intent intent = new Intent("com.example.aidl.ADD").setPackage("com.example.aidl");
         bindService(intent, conn, Context.BIND_AUTO_CREATE);
     }

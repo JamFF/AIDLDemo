@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.aidiclient">
 
-    <!-- Android11以上，客户端需要添加软件包的可见性，服务端不需要添加 -->
+    <!-- Android11及以上，客户端需要添加软件包的可见性，服务端不需要添加 -->
     <!-- https://developer.android.google.cn/training/basics/intents/package-visibility?hl=zh-cn#package-name -->
     <queries>
-        <!-- 使用package或者intent，任选其一即可 -->
+        <!-- 使用服务端应用的package或者intent，任选其一即可，注意是应用的package，不是aidl文件所在的package -->
         <package android:name="com.example.aidl" />
         <intent>
             <action android:name="com.example.aidl.ADD" />
